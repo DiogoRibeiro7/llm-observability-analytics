@@ -44,21 +44,27 @@ def gql(token: str, query: str, variables: dict[str, object]) -> dict[str, objec
 
 
 def resolve_project_id(token: str, owner: str, number: int) -> str:
-    query = """
+    user_query = """
     query($owner: String!, $number: Int!) {
       user(login: $owner) {
         projectV2(number: $number) { id }
       }
+    }
+    """
+    user_data = gql(token, user_query, {"owner": owner, "number": number})
+    user_project = (user_data.get("user") or {}).get("projectV2")
+    if user_project and user_project.get("id"):
+        return str(user_project["id"])
+
+    org_query = """
+    query($owner: String!, $number: Int!) {
       organization(login: $owner) {
         projectV2(number: $number) { id }
       }
     }
     """
-    data = gql(token, query, {"owner": owner, "number": number})
-    user_project = (data.get("user") or {}).get("projectV2")
-    if user_project and user_project.get("id"):
-        return str(user_project["id"])
-    org_project = (data.get("organization") or {}).get("projectV2")
+    org_data = gql(token, org_query, {"owner": owner, "number": number})
+    org_project = (org_data.get("organization") or {}).get("projectV2")
     if org_project and org_project.get("id"):
         return str(org_project["id"])
     raise RuntimeError(f"Could not resolve ProjectV2 id for owner='{owner}', number={number}.")
