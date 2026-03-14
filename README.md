@@ -1,5 +1,8 @@
 # llm-observability-analytics
 
+[![CI](https://github.com/DiogoRibeiro7/llm-observability-analytics/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/DiogoRibeiro7/llm-observability-analytics/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/DiogoRibeiro7/llm-observability-analytics/branch/develop/graph/badge.svg)](https://codecov.io/gh/DiogoRibeiro7/llm-observability-analytics)
+
 Observability and analytics layer for a multi-repository LLM data engineering platform.
 
 ## Platform Position
