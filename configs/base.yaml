@@ -1,0 +1,13 @@
+app:
+  environment: dev
+  schema_version: "1.0"
+
+events:
+  ingestion_mode: file
+  input_path: "./examples/events"
+  max_events: 1000
+
+storage:
+  raw_events_path: "./artifacts/raw-events"
+  curated_events_path: "./artifacts/curated-events"
+  metrics_path: "./artifacts/metrics"

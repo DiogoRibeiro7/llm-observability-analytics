@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Platform architecture discussion
+    url: https://example.com/architecture-discussion
+    about: Use this channel for platform-wide design discussions.

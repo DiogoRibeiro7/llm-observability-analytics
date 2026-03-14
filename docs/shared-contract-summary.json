@@ -1,0 +1,39 @@
+{
+  "shared_contract_version": "1.0",
+  "repository": "llm-observability-analytics",
+  "identifiers": {
+    "source_id": {"type": "string", "description": "Stable identifier of the upstream knowledge source."},
+    "document_id": {"type": "string", "description": "Stable identifier of a normalized source document."},
+    "chunk_id": {"type": "string", "description": "Stable identifier of a chunk derived from a document."},
+    "query_id": {"type": "string", "description": "Identifier of a single user or system query request."},
+    "trace_id": {"type": "string", "description": "Identifier grouping all events/spans in one execution trace."},
+    "dataset_id": {"type": "string", "description": "Logical identifier of a curated dataset."},
+    "dataset_version": {"type": "string", "description": "Immutable version of a curated dataset snapshot."},
+    "model_version": {"type": "string", "description": "Explicit model version used to produce runtime outputs."}
+  },
+  "contract_versions": {"observability_contract_version": "1.0"},
+  "handoffs": {
+    "produces": [
+      {
+        "name": "interaction_events",
+        "format": "jsonl",
+        "required_fields": ["query_id", "trace_id", "prompt_text", "response_text", "model_context", "retrieval_references"],
+        "example": "examples/integration/output_for_dataset_foundry_interactions.jsonl"
+      },
+      {
+        "name": "retrieval_trace_events",
+        "format": "jsonl",
+        "required_fields": ["query_id", "trace_id", "references", "model_version", "dataset_version"],
+        "example": "examples/integration/output_for_dataset_foundry_retrieval_traces.jsonl"
+      }
+    ],
+    "consumes": [
+      {
+        "name": "ingestion_chunks",
+        "format": "jsonl",
+        "required_fields": ["chunk_id", "document_id", "text"],
+        "example": "examples/integration/input_from_ingestion_chunks.jsonl"
+      }
+    ]
+  }
+}
