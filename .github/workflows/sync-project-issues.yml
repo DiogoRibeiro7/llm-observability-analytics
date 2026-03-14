@@ -1,0 +1,33 @@
+name: Sync Issues To Project
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  sync-project-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync repository issues to project
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_SYNC_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PROJECT_OWNER: ${{ vars.PROJECT_OWNER || github.repository_owner }}
+          PROJECT_NUMBER: ${{ vars.PROJECT_NUMBER || '6' }}
+          PROJECT_STATUS_FIELD_NAME: ${{ vars.PROJECT_STATUS_FIELD_NAME || 'Status' }}
+          PROJECT_STATUS_OPEN_OPTION_NAME: ${{ vars.PROJECT_STATUS_OPEN_OPTION_NAME || 'Todo' }}
+          PROJECT_STATUS_CLOSED_OPTION_NAME: ${{ vars.PROJECT_STATUS_CLOSED_OPTION_NAME || 'Done' }}
+        run: python scripts/sync_project_issues.py
