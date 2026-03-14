@@ -28,3 +28,4 @@ Thumbs.db
 
 *.local.yaml
 *.local.yml
+pytest.xml

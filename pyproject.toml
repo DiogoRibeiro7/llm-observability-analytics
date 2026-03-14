@@ -67,3 +67,15 @@ mypy_path = "src"
 minversion = "8.0"
 addopts = "-q --strict-markers --disable-warnings --cov=llm_observability_analytics --cov-report=term-missing"
 testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["llm_observability_analytics"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 60
+
+[tool.coverage.xml]
+output = "coverage.xml"

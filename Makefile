@@ -1,6 +1,7 @@
 PYTHON ?= python
+COVERAGE_FAIL_UNDER ?= 60
 
-.PHONY: install format lint typecheck test ci clean
+.PHONY: install format lint typecheck test test-ci ci clean
 
 install:
 	$(PYTHON) -m pip install -U pip
@@ -18,7 +19,10 @@ typecheck:
 test:
 	$(PYTHON) -m pytest
 
-ci: lint typecheck test
+test-ci:
+	$(PYTHON) -m pytest --cov-report=xml --junitxml=pytest.xml --cov-fail-under=$(COVERAGE_FAIL_UNDER)
+
+ci: lint typecheck test-ci
 
 clean:
 	$(PYTHON) -c "import shutil, pathlib; [shutil.rmtree(p, ignore_errors=True) for p in ['.pytest_cache','.mypy_cache','.ruff_cache','htmlcov','build','dist']]; [p.unlink() for p in pathlib.Path('.').glob('.coverage*') if p.is_file()]"
