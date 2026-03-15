@@ -36,7 +36,7 @@ jobs:
 
       - name: Test with coverage gate
         env:
-          COVERAGE_FAIL_UNDER: "60"
+          COVERAGE_FAIL_UNDER: "70"
         run: make test-ci
 
       - name: Upload test and coverage artifacts
