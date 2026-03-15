@@ -1,0 +1,38 @@
+name: Contract Consistency
+
+on:
+  pull_request:
+    paths:
+      - "docs/shared-contract-summary.json"
+      - "scripts/validate_shared_contracts.py"
+      - ".github/workflows/contract-consistency.yml"
+  schedule:
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Clone peer contract summaries
+        run: |
+          mkdir -p peers
+          git clone --depth 1 https://github.com/DiogoRibeiro7/llm-knowledge-ingestion.git peers/llm-knowledge-ingestion
+          git clone --depth 1 https://github.com/DiogoRibeiro7/llm-dataset-foundry.git peers/llm-dataset-foundry
+
+      - name: Validate local and cross-repo contract consistency
+        run: |
+          python scripts/validate_shared_contracts.py \
+            --peer peers/llm-knowledge-ingestion/docs/shared-contract-summary.json \
+            --peer peers/llm-dataset-foundry/docs/shared-contract-summary.json

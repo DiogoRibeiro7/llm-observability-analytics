@@ -38,6 +38,17 @@ python scripts/validate_shared_contracts.py \
   --peer ../llm-dataset-foundry/docs/shared-contract-summary.json
 ```
 
+## Automated Validation
+
+This repository also runs `.github/workflows/contract-consistency.yml`:
+
+- on pull requests that touch shared contract summary or validation logic
+- weekly on Monday at 08:00 UTC
+- on manual workflow dispatch
+
+The workflow clones peer repositories and validates cross-repo alignment using
+`scripts/validate_shared_contracts.py --peer ...`.
+
 ## Safe Update Process
 
 1. Propose contract change in `docs/shared-contract-summary.json` first.
