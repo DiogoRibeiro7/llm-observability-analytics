@@ -1,5 +1,5 @@
 PYTHON ?= python
-COVERAGE_FAIL_UNDER ?= 60
+COVERAGE_FAIL_UNDER ?= 70
 
 .PHONY: install format lint typecheck test test-ci ci clean
 
