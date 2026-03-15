@@ -94,3 +94,7 @@ python -m llm_observability_analytics.cli.main --config configs/base.yaml
 - Machine-readable summary: docs/shared-contract-summary.json`n- Manual validator: python scripts/validate_shared_contracts.py`n- Cross-repo check example:
   python scripts/validate_shared_contracts.py --peer ../llm-knowledge-ingestion/docs/shared-contract-summary.json --peer ../llm-dataset-foundry/docs/shared-contract-summary.json
 
+
+## Release Process
+
+See [docs/release-process.md](docs/release-process.md) for the coordinated `develop` -> `main` promotion and release workflow.
